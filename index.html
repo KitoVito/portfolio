@@ -23,9 +23,10 @@ body.album header{border:0}body.album main,body.album header{width:97%}body.albu
   margin: 0;
 }
 .grid{margin-top:24px}
+#folders[hidden]{display:none}
 </style>
 <header><span class="brand">Trag svjetla</span><a id="back" href="#" hidden>Svi albumi</a><span id="subtitle">Fotografski portfolio</span></header>
-<main><div id="gallery"></div></main>
+<main><div id="folders" class="grid"></div><div id="gallery"></div></main>
 
 <dialog aria-label="Povećana fotografija"><button id="close" autofocus>Zatvori ×</button><img id="large" alt=""><div><button id="prev">Prethodna</button><span id="caption"></span><button id="next">Sljedeća</button></div></dialog>
-<script src="fotografije.js?v=export827"></script><script src="galerija.js?v=aligned-rows"></script></html>
+<script src="fotografije.js?v=export827"></script><script src="galerija.js?v=export-folders"></script></html>
