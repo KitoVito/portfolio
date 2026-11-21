@@ -23,6 +23,7 @@ function render(){
     if (visible.every(photo => photo.vrijeme)) gallery.classList.add('chronological');
     visible.forEach((photo,index) => {
       const button = document.createElement('button');
+      button.style.setProperty('--ratio', photo.width / photo.height);
       const image = document.createElement('img');
       image.loading = index < 8 ? 'eager' : 'lazy';
       image.width = photo.width;

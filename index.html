@@ -9,11 +9,22 @@ body.album header{border:0}body.album main,body.album header{width:97%}body.albu
 .wall button{display:block;width:100%;border:0;background:transparent;padding:0;margin:0 0 clamp(8px,1vw,20px);break-inside:avoid}
 .wall img{display:block;width:100%;height:auto}
 @media(max-width:900px){.wall{columns:3}}@media(max-width:600px){.wall{columns:2}}
-.wall.chronological{columns:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1vw,20px);align-items:start}.wall.chronological button{margin:0}
-@media(max-width:900px){.wall.chronological{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:600px){.wall.chronological{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.wall.chronological {
+  --row-height: clamp(145px, 17vw, 360px);
+  display: flex;
+  flex-wrap: wrap;
+  columns: auto;
+  gap: clamp(8px, 1vw, 20px);
+}
+.wall.chronological button {
+  flex: var(--ratio) 1 calc(var(--ratio) * var(--row-height));
+  min-width: 0;
+  width: auto;
+  margin: 0;
+}
 </style>
 <header><span class="brand">Trag svjetla</span><a id="back" href="#" hidden>Svi albumi</a><span id="subtitle">Fotografski portfolio</span></header>
 <main><div class="intro"><h1>Fotoarhiv</h1></div><div id="gallery"></div></main>
 
 <dialog aria-label="Povećana fotografija"><button id="close" autofocus>Zatvori ×</button><img id="large" alt=""><div><button id="prev">Prethodna</button><span id="caption"></span><button id="next">Sljedeća</button></div></dialog>
-<script src="fotografije.js?v=export827"></script><script src="galerija.js?v=chronology2"></script></html>
+<script src="fotografije.js?v=export827"></script><script src="galerija.js?v=aligned-rows"></script></html>
