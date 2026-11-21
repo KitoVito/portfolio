@@ -4,7 +4,7 @@ const format = new Intl.DateTimeFormat('hr-HR', {day:'numeric',month:'long',year
 const datum = photo => format.format(new Date(photo.datum + 'T12:00:00'));
 let visible = [], current = 0;
 const albums = new Map();
-for (const photo of [...fotografije].sort((a,b) => b.datum.localeCompare(a.datum))) {
+for (const photo of [...fotografije].sort((a,b) => b.datum.localeCompare(a.datum) || (b.vrijeme || '').localeCompare(a.vrijeme || ''))) {
   const name = photo.album || photo.datum.slice(0,4);
   if (!albums.has(name)) albums.set(name, []);
   albums.get(name).push(photo);
@@ -20,6 +20,8 @@ function render(){
   gallery.replaceChildren();
   gallery.className = opened ? 'wall' : 'grid';
   if (opened) {
+    let dayGrid;
+    let previousDay;
     visible.forEach((photo,index) => {
       const button = document.createElement('button');
       const image = document.createElement('img');
@@ -30,7 +32,19 @@ function render(){
       image.alt = photo.naslov;
       button.append(image);
       button.onclick = () => {show(index); dialog.showModal();};
-      gallery.append(button);
+      if (photo.vrijeme) {
+        if (previousDay !== photo.datum) {
+          const heading = document.createElement('h2');
+          heading.textContent = datum(photo);
+          dayGrid = document.createElement('div');
+          dayGrid.className = 'day-grid';
+          gallery.append(heading, dayGrid);
+          previousDay = photo.datum;
+        }
+        dayGrid.append(button);
+      } else {
+        gallery.append(button);
+      }
     });
   } else {
     for (const [album,photos] of albums) {
@@ -51,7 +65,7 @@ function show(index){
   const photo = visible[current];
   element('large').src = photo.src;
   element('large').alt = photo.naslov;
-  element('caption').textContent = photo.naslov + ' · ' + datum(photo);
+  element('caption').textContent = photo.naslov + ' · ' + datum(photo) + (photo.vrijeme ? ' · ' + photo.vrijeme : '');
 }
 element('close').onclick = () => dialog.close();
 element('prev').onclick = () => show(current-1);
